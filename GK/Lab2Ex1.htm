@@ -42,9 +42,49 @@
         // TODO: insert code to draw the image for Exercise 1!
         graphics.fillRect(100,100,200,100);
         graphics.strokeRect(100,100,300,200);
-        graphics.fillText("hello",50,50);
-        graphics.fillOval()
-        
+        graphics.fillText("hello", 50, 50);
+
+        graphics.fillStyle = "rgb(0 0 0)";
+        graphics.fillOval(300, 450, 154, 94);
+        graphics.fillStyle = "rgb(255 0 230)";
+        graphics.fillOval(300, 450, 150, 90);
+
+        graphics.fillStyle = "rgb(255 255 255)";
+        graphics.fillOval(255, 430, 12, 12);
+        graphics.fillOval(345, 430, 12, 12);
+
+        graphics.fillStyle = "rgb(0 0 0)";
+        graphics.fillOval(255, 430, 7, 7);
+        graphics.fillOval(345, 430, 7, 7);
+
+        graphics.fillStyle = "rgb(255 255 255)";
+        graphics.fillOval(251, 426, 2, 2);
+        graphics.fillOval(341, 426, 2, 2);
+
+        graphics.fillStyle = "rgb(0 0 0)";
+        graphics.beginPath();
+        graphics.moveTo(267, 490);
+        graphics.quadraticCurveTo(300, 505, 333, 490);
+        graphics.quadraticCurveTo(300, 540, 267, 490);
+        graphics.fill();
+
+        graphics.moveTo(333, 490);
+        graphics.lineTo(332, 483);
+        graphics.lineTo(331, 492);
+        graphics.lineTo(337, 496);
+        graphics.lineTo(333, 490);
+        graphics.fill();
+
+        graphics.moveTo(267, 490);
+        graphics.lineTo(269, 483);
+        graphics.lineTo(270, 492);
+        graphics.lineTo(263, 496);
+        graphics.lineTo(267, 490);
+        graphics.fill();
+
+        graphics.fillStyle = "rgb(255 255 255)";
+        graphics.fillRect(293, 499, 8, 9)
+        graphics.fillRect(302, 499, 8, 9)
     } // end of draw()
     
     

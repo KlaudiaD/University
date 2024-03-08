@@ -83,7 +83,6 @@
                 document.addEventListener("mouseup", doMouseUp, false);
             }
             colorChoice = Number(document.getElementById("colorChoice").value);
-            // TODO: Anything else to do when mouse is first pressed?
         }
         
         function doMouseMove(evt) {
@@ -102,6 +101,8 @@
             if ( Math.abs(x-prevX) + Math.abs(y-prevY) < 3 ) {
                 return;  // don't draw squares too close together
             }
+
+            var shapeChoice = Number(document.getElementById("shapeChoice").value);
                 
             if (colorChoice == 0) {
                 graphics.fillStyle = randomColorString();
@@ -115,8 +116,19 @@
             else if (colorChoice == 3) {
                 graphics.fillStyle = "blue";
             }
-            graphics.fillRect(x-20,y-20,40,40);
-            graphics.strokeRect(x-20,y-20,40,40);
+            else if (colorChoice == 4) {
+                graphics.fillStyle = "yellow";
+            }
+            else if (colorChoice == 5) {
+                graphics.fillStyle = "pink";
+            }
+
+            if (shapeChoice == 0) {
+                graphics.fillRect(x - 20, y - 20, 40, 40);
+                graphics.strokeRect(x - 20, y - 20, 40, 40);
+            } else if (shapeChoice == 1) {
+                drawPentadecagon(x, y, 50, graphics.fillStyle);
+            }
             
             /*------------------------------------------------------------*/
             
@@ -221,7 +233,25 @@
             return color.data;
         }
     }    // end of addGraphicsContextExtras()
-    
+
+    function drawPentadecagon(x, y, radius, fillColor) {
+        var numberOfSides = 15, size = radius,
+            Xcenter = x, Ycenter = y;
+
+        graphics.beginPath();
+        graphics.moveTo(Xcenter + size * Math.cos(0), Ycenter + size * Math.sin(0));
+
+        for (var i = 1; i <= numberOfSides; i += 1) {
+            graphics.lineTo(Xcenter + size * Math.cos(i * 2 * Math.PI / numberOfSides), Ycenter + size * Math.sin(i * 2 * Math.PI / numberOfSides));
+        }
+
+        graphics.closePath();
+        graphics.fillStyle = fillColor;
+        graphics.fill();
+        graphics.strokeStyle = 'black';
+        graphics.lineWidth = 1;
+        graphics.stroke();
+    }
        
     /**
      * The init() function is called after the page has been
@@ -229,6 +259,7 @@
      * and it installs mouse and key listeners.  If an error
      * occurs, a message is displayed in place of the canvas.
      */
+
     function init() {
         try {
             canvas = document.getElementById("canvas");
@@ -242,9 +273,10 @@
         addGraphicsContextExtras(graphics);
         installMouseHandler();
         graphics.fillStyle = "white";
-        graphics.fillRect(0,0,canvas.width,canvas.height);
+        graphics.fillRect(0, 0, canvas.width, canvas.height);
     }
     
+
 </script>
 <link href="data:text/css,%3Ais(%5Bid*%3D'google_ads_iframe'%5D%2C%5Bid*%3D'taboola-'%5D%2C.taboolaHeight%2C.taboola-placeholder%2C%23credential_picker_container%2C%23credentials-picker-container%2C%23credential_picker_iframe%2C%5Bid*%3D'google-one-tap-iframe'%5D%2C%23google-one-tap-popup-container%2C.google-one-tap-modal-div%2C%23amp_floatingAdDiv%2C%23ez-content-blocker-container)%20%7Bdisplay%3Anone!important%3Bmin-height%3A0!important%3Bheight%3A0!important%3B%7D" rel="stylesheet" type="text/css"></head>
 <body onload="init()"> <!-- the onload attribute here is what calls the init() function -->
@@ -255,13 +287,23 @@
     <!-- This message will be shown in the page if JavaScript is not available. -->
 <p>JavaScript is required to use this page.</p>
 </noscript>
+<p>
+    <input type="button" id="clear" value="Clear">
 
-<p><b>Color:</b>
+    <b>Shape:</b>
+    <select id="shapeChoice">
+        <option value="0" selected="selected">Square</option>
+        <option value="1">15-sided Polygon</option>
+    </select>
+
+    <b>Color:</b>
     <select id="colorChoice">
         <option value="0" selected="selected">Random</option>
         <option value="1">Red</option>
         <option value="2">Green</option>
         <option value="3">Blue</option>
+        <option value="4">Yellow</option>
+        <option value="5">Pink</option>
     </select>
 </p>
 
@@ -273,7 +315,7 @@ Canvas not supported.
 </div>
 
 
-<script>mendeleyWebImporter = {
+<script>IDBCursormendeleyWebImporter = {
   downloadPdfs(e,t) { return this._call('downloadPdfs', [e,t]); },
   open() { return this._call('open', []); },
   setLoginToken(e) { return this._call('setLoginToken', [e]); },
@@ -289,4 +331,8 @@ Canvas not supported.
       });
     });
   }
-};</script></body></html>
+  };
+  document.getElementById('clear').addEventListener('click', function () {
+     graphics.clearRect(0, 0, canvas.width, canvas.height);
+  }, false);
+    </script></body></html>
